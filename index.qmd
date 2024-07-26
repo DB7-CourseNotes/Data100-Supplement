@@ -1,0 +1,8 @@
+
+## Welcome!
+
+This book is intended as a supplement to [R4DS](https://r4ds.hadley.nz/) and [TMWR](https://www.tmwr.org/). It includes runnable code chunks that let you work through the chapters in a browser (without needing RStudio open).
+
+I will also use this in class to set up some active learning assignmnets and participation quizzes. This way you can still particpate in coding exercises even if you only have a phone or tablet.
+
+
