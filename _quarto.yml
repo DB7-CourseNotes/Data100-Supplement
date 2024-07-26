@@ -11,7 +11,7 @@ webr:
   autoload-packages: true
   cell-options:
     editor-word-wrap: true
-    editor-font-scale: 0.9
+    editor-font-scale: 0.8
 
 date: "last-modified"
 date-format: iso

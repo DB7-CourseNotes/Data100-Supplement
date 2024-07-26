@@ -41,5 +41,38 @@
       "Whole Game",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>01 Data Visualization</span>"
     ]
+  },
+  {
+    "objectID": "L01-DataVis-InClass.html",
+    "href": "L01-DataVis-InClass.html",
+    "title": "01 Data Visualization - In-Class",
+    "section": "",
+    "text": "Exploring the penguins",
+    "crumbs": [
+      "Whole Game",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>01 Data Visualization - In-Class</span>"
+    ]
+  },
+  {
+    "objectID": "L01-DataVis-InClass.html#exploring-the-penguins",
+    "href": "L01-DataVis-InClass.html#exploring-the-penguins",
+    "title": "01 Data Visualization - In-Class",
+    "section": "",
+    "text": "Please enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "Whole Game",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>01 Data Visualization - In-Class</span>"
+    ]
+  },
+  {
+    "objectID": "L01-DataVis-InClass.html#adding-to-a-ggplot-object",
+    "href": "L01-DataVis-InClass.html#adding-to-a-ggplot-object",
+    "title": "01 Data Visualization - In-Class",
+    "section": "Adding to a ggplot object",
+    "text": "Adding to a ggplot object\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "crumbs": [
+      "Whole Game",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>01 Data Visualization - In-Class</span>"
+    ]
   }
 ]
