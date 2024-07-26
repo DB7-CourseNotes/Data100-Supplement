@@ -35,6 +35,7 @@ book:
     - part: Whole Game
       chapters:
         - L01-DataVis.qmd
+        - L01-DataVis-InClass.qmd
   
 
 format:
