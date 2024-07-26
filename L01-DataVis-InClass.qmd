@@ -1,0 +1,20 @@
+# 01 Data Visualization - In-Class
+
+## Exploring the `penguins`
+
+```{webr-r}
+#| label: 
+library(palmerpenguins)
+library(dplyr)
+
+glimpse(penguins)
+```
+
+## Adding to a `ggplot` object
+
+```{webr-r}
+#| label: building
+library(ggplot2)
+
+
+```
