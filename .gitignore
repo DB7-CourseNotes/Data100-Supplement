@@ -1,0 +1,17 @@
+/.quarto/
+_freeze/*
+
+./L*files/
+./L*cache/
+L*files/
+L*cache/
+!docs/L*files/
+./site_libs
+
+# RStudio stuff
+.Rproj.user
+.Rhistory
+ST362-STAR.Rproj
+
+# Quarto extensions
+_extensions/*
