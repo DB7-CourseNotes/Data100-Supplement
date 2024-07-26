@@ -1,7 +1,7 @@
 ---
 title: "01 Data Visualization"
 webr:
-  packages: ["palmerpenguins"]
+  packages: ["palmerpenguins", "dplyr", "ggplot2"]
   autoload-packages: true
 ---
 
@@ -13,7 +13,7 @@ This chapter accompanies [1 Data Visualization](https://r4ds.hadley.nz/data-visu
 
 Use the following code cell to follow along while reading the chapter. (You are encouraged to do this in RStudio instead!)
 
-These notes use something called `webr`, which allows R to run in your browser (no installation needed)! However, it also means that the packages must be installed every time you reload your browser. Run the following cell once and it will show package installation output, then run it again and that output will be gone.
+These notes use something called `webr`, which allows R to run in your browser (no installation needed)! 
 
 ```{webr-r}
 #| label: follow-along
