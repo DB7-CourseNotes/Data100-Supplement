@@ -1,10 +1,20 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Data100: Supplementary Materials",
+    "section": "",
+    "text": "Welcome!\nThis book is intended as a supplement to R4DS and TMWR. It includes runnable code chunks that let you work through the chapters in a browser (without needing RStudio open).\nI will also use this in class to set up some active learning assignmnets and participation quizzes. This way you can still particpate in coding exercises even if you only have a phone or tablet.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Welcome!</span>"
+    ]
+  },
+  {
     "objectID": "L01-DataVis.html",
     "href": "L01-DataVis.html",
     "title": "01 Data Visualization",
     "section": "",
-    "text": "Chapter Follow-Along\nUse the following code cell to follow along while reading the chapter. (You are encouraged to do this in RStudio instead!)\nThese notes use something called webr, which allows R to run in your browser (no installation needed)! However, it also means that the packages must be installed every time you reload your browser. Run the following cell once and it will show package installation output, then run it again and that output will be gone.",
+    "text": "Chapter Follow-Along\nUse the following code cell to follow along while reading the chapter. (You are encouraged to do this in RStudio instead!)\nThese notes use something called webr, which allows R to run in your browser (no installation needed)!",
     "crumbs": [
       "Whole Game",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>01 Data Visualization</span>"
@@ -30,16 +40,6 @@
     "crumbs": [
       "Whole Game",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>01 Data Visualization</span>"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Data100: Supplementary Materials",
-    "section": "",
-    "text": "0.1 Welcome!\nThis book is intended as a supplement to R4DS and TMWR. It includes runnable code chunks that let you work through the chapters in a browser (without needing RStudio open).\nI will also use this in class to set up some active learning assignmnets and participation quizzes. This way you can still particpate in coding exercises even if you only have a phone or tablet.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Welcome!</span>"
     ]
   }
 ]
