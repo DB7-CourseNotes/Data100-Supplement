@@ -13,7 +13,7 @@ This chapter accompanies [1 Data Visualization](https://r4ds.hadley.nz/data-visu
 
 Use the following code cell to follow along while reading the chapter. (You are encouraged to do this in RStudio instead!)
 
-These notes use something called `webr`, which allows R to run in your browser (no installation needed)! 
+These supplementary notes use something called `webr`, which allows R to run in your browser (no installation needed)! 
 
 ```{webr-r}
 #| label: follow-along
