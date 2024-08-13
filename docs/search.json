@@ -14,7 +14,7 @@
     "href": "L01-DataVis.html",
     "title": "01 Data Visualization",
     "section": "",
-    "text": "Chapter Follow-Along\nUse the following code cell to follow along while reading the chapter. (You are encouraged to do this in RStudio instead!)\nThese notes use something called webr, which allows R to run in your browser (no installation needed)!",
+    "text": "Chapter Follow-Along\nUse the following code cell to follow along while reading the chapter. (You are encouraged to do this in RStudio instead!)\nThese supplementary notes use something called webr, which allows R to run in your browser (no installation needed)!",
     "crumbs": [
       "Whole Game",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>01 Data Visualization</span>"
@@ -69,7 +69,7 @@
     "href": "L01-DataVis-InClass.html#adding-to-a-ggplot-object",
     "title": "01 Data Visualization - In-Class",
     "section": "Adding to a ggplot object",
-    "text": "Adding to a ggplot object\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
+    "text": "Adding to a ggplot object\nAdd points to the following plot. The q1_check() function will tell you if you’ve done it right.\nNote that there are parentheses “()” around the creation of ggplot object. We’ll talk about why this is in class. In short, it’s a technical reason that’s outside of the scope of the course but helps with grading things.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.",
     "crumbs": [
       "Whole Game",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>01 Data Visualization - In-Class</span>"
