@@ -1,5 +1,5 @@
 project:
-  type: book
+#  type: book
   output-dir: docs
 
 engine: knitr
@@ -7,43 +7,42 @@ filters:
   - webr
 
 webr:
-  packages: ["ggplot2"]
+  packages: ["ggplot2", "dplyr"]
   autoload-packages: true
   cell-options:
     editor-word-wrap: true
     editor-font-scale: 0.8
 
-date: "last-modified"
-date-format: iso
+
 institute: "Wilfrid Laurier University"
-number-depth: 0
+number-depth: 2
 author: "Dr. Devan Becker"
 execute:
   warning: false
+embed-resources: true
 
-book: 
-  title: "Data100: Supplementary Materials"
-  subtitle: "To be read alongside the relevant chapters in R4DS and TidyModels"
-  page-footer:
-    left: |
-      Copyright Devan Becker, released under Creative Commons Attribution-ShareAlike 4.0.
-  page-navigation: true
-  sidebar: 
-    collapse-level: 1
-  chapters:
-    - index.qmd
-    - part: Whole Game
-      chapters:
-        - L01-DataVis.qmd
-        - L01-DataVis-InClass.qmd
+
+#book: 
+#  title: "Data100: Supplementary Materials"
+#  subtitle: "To be read alongside the relevant chapters in R4DS and TidyModels"
+#  page-footer:
+#    left: |
+#      Copyright Devan Becker, released under Creative Commons Attribution-ShareAlike 4.0.
+#  page-navigation: true
+#  sidebar: 
+#    collapse-level: 1
+#  chapters:
+#    - index.qmd
+#    - part: Whole Game
+#      chapters:
+#        - L01-DataVis.qmd
+#        - L01-DataVis-InClass.qmd
   
 
 format:
   html:
-    theme:
-      light: [flatly, smaller_lists.scss]
-      dark: [darkly, smaller_lists.scss]
+    theme: [flatly, smaller_lists.scss]
     mainfont: ubuntu, sans-serif
     code-fold: false
     code-summary: "Show the code"
-    number-sections: false
+    number-sections: true
