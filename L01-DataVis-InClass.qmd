@@ -1,9 +1,10 @@
 ---
+title: "Data Visualization"
 webr:
   packages: ["ggplot2", "palmerpenguins"]
 ---
 
-# Data Visualization
+# `ggplot` Basics
 
 ```{webr-r}
 #| label: setup
@@ -44,7 +45,7 @@ library(ggplot2)
 
 (penguin_point <- ggplot(penguins) +
   aes(x = flipper_length_mm, y = body_mass_g)
-  # YOUR SOLUTION HERE
+  # YOUR CODE HERE
 )
 
 q1_check()
