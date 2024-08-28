@@ -1,0 +1,54 @@
+---
+title: "Data Visualization"
+webr:
+  packages: ["ggplot2", "palmerpenguins"]
+---
+
+# `ggplot` Basics
+
+```{webr-r}
+#| label: setup
+#| context: setup
+
+q1_check <- function() {
+  if (!exists("penguin_point")) {
+    error("The object \"penguin_point\" has not been created.")
+  }
+  ifelse(length(penguin_point$layers) > 0,
+    yes = ifelse("GeomPoint" %in% class(penguin_point$layers[[1]]$geom),
+      yes = "Test Passed :)\n",
+      no = "No points found.\n"),
+    no = "No layers added.\n") |>
+    cat()
+}
+```
+
+## Exploring the `penguins`
+
+```{webr-r}
+#| label: 
+library(palmerpenguins)
+library(dplyr)
+
+glimpse(penguins)
+```
+
+## Adding to a `ggplot` object
+
+**Add** points to the following plot. The `q1_check()` function will tell you if you've done it right. 
+
+Note that there are parentheses "()" around the creation of ggplot object. We'll talk about why this is in class. In short, it's a technical reason that's outside of the scope of the course but helps with grading things.
+
+```{webr-r}
+#| label: building
+library(ggplot2)
+
+(penguin_point <- ggplot(penguins) +
+  aes(x = flipper_length_mm, y = body_mass_g)
+  # YOUR CODE HERE
+)
+
+q1_check()
+```
+
+

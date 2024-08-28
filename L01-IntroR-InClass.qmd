@@ -1,0 +1,290 @@
+---
+title: Intro to R
+editor: visual
+webr:
+  packages: ["palmerpenguins"]
+  autoload-packages: true
+---
+
+```{webr-r}
+#| label: setup
+#| context: setup
+library(palmerpenguins)
+ex_check <- function() {
+  if (!exists("Q1")) {
+    stop("`Q1` not assigned. Give it a value!")
+  }
+  if (is.na("Q1")) {
+    stop("Make sure you remove NA values!")
+  }
+  if (!exists("Q3")) {
+    stop("`Q3` not assigned. Give it a value!")
+  }
+  if (!exists("IQR")) {
+    stop("`IQR` not assigned. Give it a value!")
+  }
+
+  sol <- quantile(penguins$flipper_length_mm, prob = 0.75, na.rm = TRUE) -
+    quantile(penguins$flipper_length_mm, prob = 0.25, na.rm = TRUE)
+  if (IQR != sol) {
+    stop("Incorrect calculation! Make sure you take the difference of the output from the quantile functions!")
+  }
+  return("Correct!")
+}
+```
+
+## R as a calculator
+
+In the following code chunk, get R to tell you the answer to:
+
+- 1 + 1
+- sin(1 + 1)
+- 1 + 1 / 2
+- (1 + 1) / 2
+- 3 ^ 2
+- 9 ^ 1 / 2
+- 9 ^ (1 / 2)
+
+Note: Shift+Enter will run the whole chunk here, and Cmd/Ctrl+Enter will run just the line that your cursor is on. This is slightly different from RStudio!
+
+```{webr-r}
+#| label: R-as-calculator
+
+```
+
+
+## Creating Objects in R
+
+There are two code chunks below. In the first, define a variable called `x` such that the second code chunk will result in a 2.
+
+```{webr-r}
+#| label: creating-objects
+
+```
+
+The following code chunk *cannot* be changed. The first line assigns a value to `y`, then the second line displays the value of `y`. Create an object called `x` so that the output is 2.
+
+```{webr-r}
+#| label: creating-objects-readonly
+#| readonly: true
+#| error: true
+y <- 2 * x + 4
+y
+```
+
+## Booleans
+
+"Boolean" is a fancy word for "code that evaluates to either True or False". 
+
+In R, "`TRUE`" and "`FALSE`" are Boolean values, and there are a couple ways that these come up. Usually, these come in the form of `==`, `>`, `>=`, and `!=` for "not equal to".
+
+Ask R the following:
+
+- Is `1 + 1` equal to `2`?
+- Is `2^3` less than `3^2`?
+- Is `1 + 1` less than or equal to `2`?
+- Is `1 + 1` greater than or equal to `2`?
+
+```{webr-r}
+#| label: bool-0
+1 + 1 == 2
+```
+
+::: {.callout-warning}
+### Floating Point Calculations are Hard!
+
+Binary digits are integers. Computers can only represent numbers as binary digits. Due to some complicated stuff that I don't personally understand, computers can't actually do math perfectly.
+
+```{webr-r}
+#| label: float-point
+
+0.3               # 0.3 is 0.3
+0.1 + 0.2         # 0.1 + 0.2 is 0.3
+0.1 + 0.2 == 0.3  # THEN WHY IS THIS FALSE?
+```
+
+In the cell above, try and see what `0.3 - (0.1 + 0.2)` evaluates to. [You may now enjoy this comic.](https://www.smbc-comics.com/comic/2013-06-05)
+
+In summary, be very careful with Booleans!
+:::
+
+## Vectors
+
+The following code chunk creates a vector of the values from 1 to 10, then displays them. What happens if you change the second line to `x * 1`? (Think about this careully before trying it.)
+
+```{webr-r}
+#| label: vectors-0
+x <- 1:10
+x
+```
+
+Another way to create vectors is with the `c()` function (we'll talk about functions later). The `c()` function `c`oncatenates values (puts them together). The following chunk makes a vector called `x` with the values from 1 to 10. The shortcut we used earlier is much easier!
+
+```{webr-r}
+#| label: vectors-1
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10) # same as x <- 1:10
+x
+```
+
+In the chunk above, notice that I used `# same as x <- 1:10` at the end of the first line. This is called a **comment**. R will ignore *everything* after a `#`, no matter where it appears. We'll learn about good commenting later in this course. For now, it's just a nice way to make notes within code.
+
+R does something called "recycling" vectors. It's sometimes nice, but most of the time it can cause an unseen error.
+
+Try to predict what the output of the next chunk will be. Think about it carefully. Then run it and see if you were right.
+
+```{webr-r}
+#| label: recycling-0
+y <- 1:10
+z <- 1:2
+y
+y + z
+```
+
+What will happen with the next chunk? Again, think it through thoroughly.
+
+```{webr-r}
+#| label: recycling-1
+y <- 1:10
+z <- 1:3
+y
+y + z
+```
+
+<details>
+<summary>**A Warning! (Sometimes)**</summary>
+::: {.callout-warning}
+### Recycling only *sometimes* gives a warning
+
+- If one vector is a multiple of the length of another, there is no warning.
+- If the vectors are not multples, R will still recycle, but it will complain about it.
+
+:::
+
+In R, there's no such thing as a single value. The expression `z <- 1` makes a vector of length one. If we then do `y + z`, the vector of length one is being recycled. This is very very good behaviour.
+
+Another hangup: multiplying vectors happens element-wise. If you know about vectors in math, you might expect a dot product or a cross product, but that's not the case.
+
+```{webr-r}
+#| label: not-dot-product
+x <- c(1, 2, 3, 4)
+y <- c(2, 2, 12, 10)
+x * y
+```
+
+</details>
+
+### Boolean Vectors
+
+As we've seen, things in R work element-wise. That is, each element gets evaluated separately. 
+
+As always, try to guess the output before running the code!
+
+```{webr-r}
+#| label: bool-vect
+x <- 1:10
+x <= 5
+```
+
+```{webr-r}
+#| label: bool-vects
+x <- 1:10
+y <- 1:10
+x <= y
+```
+
+## Functions
+
+Penguins are cool. Let's load some data and look at them. In the following code chunk, I do some things that you don't need to worry about. All that matters is that I have a vector of flipper lengths from antarctic penguins.
+
+```{webr-r}
+#| label: penguins-0
+#| autorun: true
+#| readonly: true
+# ignore this for now, we'll talk about "packages" later!
+library(palmerpenguins)
+# Also ignore this. We'll talk about "dataframes" later!
+flipper_length <- penguins$flipper_length_mm
+flipper_length
+```
+
+R has a function called `mean()` (I'll always put parentheses after a function name to show that it's a function). It calculates the mean. Let's try it out!
+
+```{webr-r}
+#| label: penguins-1
+mean(flipper_length)
+```
+
+The mean flipper length is... NA?
+
+If you look carefully at the flipper lengths, some of them are labelled as `NA`. This means that the value is missing. If I told you that I have three values, the first is 5, the second is 2, and the third is some other number, and I asked you to calculate the mean, what would you say? Probably "I can't tell you the mean until you tell me the missing value"!
+
+In R, `NA` means "some value that I don't know", or "Not Available". Generally, R will complain about these. We might want to try and find the missing value, we might want to do something to replace it, or we might want to ignore it. R does not assume this, so we have to tell R what to do.
+
+That's where functions come in! "Functions" are just things that take input and provide output. The input doesn't need to be a single thing, it can also take some instructions, called "`arguments`". To find out what arguments a function takes, the help page is a good place to start.
+
+```{webr-r}
+#| label: help
+?mean
+```
+
+The `mean()` function takes an argument called `na.rm`, which is `FALSE` by default. This means that it does not remove (`rm` is common shorthand for "remove") `NA` values. If we set it to `TRUE`, then it will remove NA values before calculating the mean and give us the actual mean:
+
+```{webr-r}
+#| label: penguins-2
+mean(flipper_length, na.rm = TRUE)
+```
+
+### Argument Matching
+
+In the previous cell, we used `mean(flipper_length, na.rm = TRUE)`. From the help file, we saw that `mean()` expects arguments `x`, `trim`, and `na.rm`. What's `flipper_length` doing at the start there???
+
+If you don't name an argument, R assumes that they are in a specific order. For the mean function, the order of the arguements is `x`, then `trim`, then `na.rm`. The following are equivalent:
+
+```{webr-r}
+#| label: penguins-3
+# Naming every argument:
+mean(x = flipper_length, na.rm = TRUE)
+# If arguments are named, they can be in any order:
+mean(na.rm = TRUE, x = flipper_length)
+# If arguments are not named, they must be in a specific order:
+mean(flipper_length, 0, TRUE)
+```
+
+Obviously, the first line is easier to read. For the most part, the first argument is important and we can guess what it should be. Any other arguments should be named. In other words, 
+
+- `mean(flipper_length, na.rm = TRUE)` is the preferred style
+- There's nothing wrong `mean(x = flipper_length, na.rm = TRUE)`
+- People know that the first argument to the mean function should be the thing we're finding the mean of, so `mean(na.rm = TRUE, x = flipper_length)` is not encouraged.
+- `mean(flipper_length, 0, TRUE)` is generally not encouraged. Name the arguments that change how the function works, but it's okay to not name the first argument.
+
+We did not talk about the `...` in the help file and we'll just ignore it. It's part of a much more complicated coding concept that we probably won't cover in this course.
+
+Use the following code chunk to check the help file of the following functions, then apply them to the `flipper_length` vector (removing `NA`s wherever possible).
+
+- Use `quantile()` to find the median (the 0.5 probability).
+- Also use `median()` to find the median (should be the same as the previous question).
+- Use `max()` and `min()` (you can guess what statistics they'll find).
+- Use `summary()` to find the so-called "five-number summary".
+  - There is no argument named `na.rm`. Play around with the function to see what happens with `NA`s!
+- *Bonus*: What's the relationship between `sort()` and `order()`? Also, how do the handle `NA`s?
+
+```{webr-r}
+#| label: playground
+
+```
+
+
+### Challenge: The Interquartile Range (IQR)
+
+The IQR is defined as the third quartile minus the first quartile. That is, take the value in the data such that 75\% of the data is below it, then you subtract the value in the data such that 25\% of the data is below this value. This gives a measure of scale in the data.
+
+In the cell below, define an object called "Q1" that contains the first quartile of the `flipper_length` data, an object called "Q3" that has the third quartile, and an object called `IQR` that contains the difference of these two.
+
+```{webr-r}
+#| label: challenge-0
+Q1 <- ### Your code here
+Q3 <- ### Your code here
+
+# This will tell you if your answer is correct!
+ex_check()
+```
