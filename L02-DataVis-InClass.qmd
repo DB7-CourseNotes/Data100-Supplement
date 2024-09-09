@@ -4,26 +4,13 @@ webr:
   packages: ["ggplot2", "palmerpenguins"]
 ---
 
-# `ggplot` Basics
+# Preliminaries: Data and Data Types
 
-```{webr-r}
-#| label: setup
-#| context: setup
+## Let's make this quick!
 
-q1_check <- function() {
-  if (!exists("penguin_point")) {
-    error("The object \"penguin_point\" has not been created.")
-  }
-  ifelse(length(penguin_point$layers) > 0,
-    yes = ifelse("GeomPoint" %in% class(penguin_point$layers[[1]]$geom),
-      yes = "Test Passed :)\n",
-      no = "No points found.\n"),
-    no = "No layers added.\n") |>
-    cat()
-}
-```
+Unlike in Beetlejuice, you only have to put an R object names *once* to make it appear. 
 
-## Exploring the `penguins`
+For data sets, this prints a lot of information to the screen. We often use `glimpse()` instead:
 
 ```{webr-r}
 #| label: 
@@ -33,22 +20,207 @@ library(dplyr)
 glimpse(penguins)
 ```
 
-## Adding to a `ggplot` object
+Notice that there's an R object called `penguins`, and there are columns called `body_mass_g`, `flipper_length_mm`, and `species`. 
 
-**Add** points to the following plot. The `q1_check()` function will tell you if you've done it right. 
+Also note that some are called "`<fct>`" and some are called "`<dbl>`". If you look closely, you'll notice that the `<fct>` variables are all words, and the `<dbl>` are all numbers.
 
-Note that there are parentheses "()" around the creation of ggplot object. We'll talk about why this is in class. In short, it's a technical reason that's outside of the scope of the course but helps with grading things.
+- **Factor/Categorical**: Only takes specific values.
+  - Examples: Names, number of cylinders in a car engine.
+    - If something is labelled as a number, but is better listed as a factor, you may need the `factor()` function.
+  - To be a factor variable, you must be able to list out all of the possible values ahead of time.
+  - Often labelled `<fct>` in R.
+- **Numeric**: A number.
+  - Often labelled `<dbl>` in R, which is short for "double precision", which just means that the computer will be ready for a lot of decimal places if needed.
+
+
+# `ggplot` Basics
+
+For now, these are sacred incantations which you will need to remember. As we learn more R, they'll make more sense!
+
+Practice practice practice. Keep a file that explains every piece of code as well as you can! If you come to my office saying that you studied for hours and still got a bad grade, I'm going to ask to see your code!
+
+## Building a `ggplot2` work of art
+
+- `ggplot()` is the canvas
+- `aes()` are the paints
+- `geom_*()`s are the brush strokes
+
+In the following code chunk, we'll add each element one-by-one and see what happens!
 
 ```{webr-r}
-#| label: building
-library(ggplot2)
-
-(penguin_point <- ggplot(penguins) +
-  aes(x = flipper_length_mm, y = body_mass_g)
-  # YOUR CODE HERE
-)
-
-q1_check()
+#| label: buildit
+ggplot()
 ```
+
+<details>
+<summary>**Where do I put `aes()`?**</summary>
+
+There are lots of options! All three of the following make the exact same plot:
+
+```{webr-r}
+# Set the aes within ggplot
+# Will apply to all geoms
+ggplot(data = penguins, mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
+
+# Set the aes for a particular geom
+# If you add another geom, it won't use the same aesthetics
+ggplot(data = penguins) +
+  geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g))
+
+# This option is non-standard but it's my favourite.
+# This is equivalent to the first one, which sets it for all geoms.
+ggplot(data = penguins) +
+  aes(x = flipper_length_mm, y = body_mass_g) +
+  geom_point()
+```
+
+We'll see some cases where we set aesthetics separately later!
+
+*****
+</details>
+
+## A quick geometry tour
+
+Un-comment each of the lines (one at a time) and observe!
+
+```{webr-r}
+#| label: geom_star
+# Univariate - continuous
+ggplot(penguins, aes(x = flipper_length)) +
+  geom_density()
+  #geom_boxplot()
+  #geom_histogram()
+  #geom_violin()
+```
+
+```{webr-r}
+# Univariate - categorical
+ggplot(penguins, aes(x = species)) +
+  geom_bar()
+  # there is no geom_pie() - pie charts are never the right option.
+
+```
+
+```{webr-r}
+# bivariate - continuous
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
+  #geom_jitter() # "Jitter" makes it easier to see overlapping points
+  #geom_line()
+  #geom_hex()
+
+```
+
+```{webr-r}
+# Bivariate - continuous/categorical
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot()
+  #geom_violin()
+  #geom_histogram()
+
+```
+
+```{webr-r}
+# Bivariate - categ/categ
+ggplot(penguins, aes(x = species, fill = sex)) +
+  geom_bar()
+  #geom_bar(position = "dodge")
+# geom_count() uses different aesthetics!
+ggplot(penguins, aes(x = species, y = sex)) +
+  geom_count()
+```
+
+We can also add more than one aesthetic to a plot. The following is the most common use-case:
+
+```{webr-r}
+#| label: pointandsmooth
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth()
+```
+
+Note that the plot looks slightly different if you change the order of the geoms!
+
+## Playing with `aes`thetics
+
+Check the help file for `geom_point()`, and try each of the aesthetics!
+
+Try using the columns labelled `species` (categorical/factor) and `bill_length_mm` (continuous) for each of them.
+
+```{webr-r}
+#| label: aes
+ggplot(penguins) +
+  aes(x = flipper_length_mm, y = body_mass_g) +
+  geom_point()
+```
+
+## The fascinating facets of a plot
+
+The `facet_*()` functions allow you to make different plots based on the values of a categorical variable.
+
+```{webr-r}
+#| label: facinating
+# The first three lines are the exact same as before.
+ggplot(penguins) +
+  aes(x = flipper_length_mm, y = body_mass_g) +
+  geom_point() +
+  facet_wrap(vars(species))
+```
+
+<details>
+<summary>**What goes in the facet brackets?**</summary>
+
+You'll notice that the textbook always uses `vars(...)` (vars is short for variables, not variances), whereas I will sometimes use `~`. The `vars(...)` approach is the recommended one, the `~` approach might stop working one day but it's convenient for now.
+
+*****
+</details>
+
+# Making Good Plots
+
+To test your knowledge, we'll use the `mpg` data set, which is loaded when you load the `ggplot2` package.
+
+```{webr-r}
+#| label: mpg
+glimpse(mpg)
+```
+
+1. `hwy` (the fuel efficiency of the car on the highway, in miles per gallon) versus `displ` (the size (displacement) of the engine).
+
+```{webr-r}
+ggplot() +
+  geom_()
+```
+
+<details>
+<summary>**Solution**</summary>
+
+```{webr-r}
+ggplot(mpg, mapping = aes(x = displ, y = mpg)) +
+  geom_point() + geom_smooth()
+```
+
+*****
+</details>
+
+2. Highway fuel efficiency versus the classification of the car.
+
+```{webr-r}
+
+```
+
+3. The number of cylinders versus the classification of the car.
+
+<details>
+<summary>**Solution**</summary>
+This one is tricky - the number of cylinders are numbers, but the plot looks much better if they are treated as a factor variable.
+
+```{webr-r}
+ggplot(mpg, mapping = aes(fill = factor(cyl), x = class)) +
+  geom_bar(position = "dodge")
+```
+
+*****
+</details>
 
 
