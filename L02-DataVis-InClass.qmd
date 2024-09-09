@@ -155,6 +155,55 @@ ggplot(penguins) +
   geom_point()
 ```
 
+
+Note that some geoms take different aesthetics, or just look better with different aesthetics:
+
+```{webr-r}
+global_aes <- ggplot(penguins) +
+  aes(
+    x = flipper_length_mm,
+    y = body_mass_g,
+    colour = species
+  ) +
+  geom_point() +
+  geom_smooth()
+
+no_smooth_colour <- ggplot(penguins) +
+  aes(
+    x = flipper_length_mm,
+    y = body_mass_g
+  ) +
+  geom_point(mapping = aes(colour = species)) +
+  geom_smooth()
+
+global_aes
+#no_smooth_colour # uncomment to see the difference!
+```
+
+## Args and Aes
+
+The `colour` can be set according to data (aes) or can be set for all of the data points (as an argument).
+
+```{webr-r}
+ggplot(penguins) +
+  geom_point(
+    mapping = aes(
+      x = flipper_length_mm,
+      y = body_mass_g,
+      colour = species
+    )
+  )
+
+ggplot(penguins) +
+  geom_point(
+    mapping = aes(
+      x = flipper_length_mm,
+      y = body_mass_g
+    ), 
+    colour = "red"
+  )
+```
+
 ## The fascinating facets of a plot
 
 The `facet_*()` functions allow you to make different plots based on the values of a categorical variable.
@@ -178,7 +227,7 @@ You'll notice that the textbook always uses `vars(...)` (vars is short for varia
 
 # Making Good Plots
 
-To test your knowledge, we'll use the `mpg` data set, which is loaded when you load the `ggplot2` package.
+To test your knowledge, we'll use the `mpg` data set, which is loaded when you load the `ggplot2` package. Play around with the geoms listed above to see what errors you get and which plots look the best!
 
 ```{webr-r}
 #| label: mpg
@@ -209,7 +258,11 @@ ggplot(mpg, mapping = aes(x = displ, y = mpg)) +
 
 ```
 
-3. The number of cylinders versus the classification of the car.
+3. Highway fuel efficiency versus the number of cylinders.
+
+```{webr-r}
+
+```
 
 <details>
 <summary>**Solution**</summary>
@@ -223,4 +276,27 @@ ggplot(mpg, mapping = aes(fill = factor(cyl), x = class)) +
 *****
 </details>
 
+4. The highway fuel efficiency versus the displacement of the engine for different numbers of cylinders.
 
+```{webr-r}
+
+```
+
+<details>
+<summary>**Solution**</summary>
+
+There are two ways to do this: with aesthetics or with facets! Which one is easier to get insights from? Which one is prettier?
+
+```{webr-r}
+ggplot(mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_point() +
+  facet_wrap(~ cyl)
+```
+
+```{webr-r}
+ggplot(mpg, mapping = aes(x = displ, y = hwy, colour = factor(cyl))) +
+  geom_point()
+```
+
+*****
+</details>
