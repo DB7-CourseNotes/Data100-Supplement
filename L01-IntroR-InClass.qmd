@@ -59,14 +59,14 @@ There are two code chunks below. In the first, define a variable called `x` such
 
 ```{webr-r}
 #| label: creating-objects
-
+x <- 4
 ```
 
 The following code chunk *cannot* be changed. The first line assigns a value to `y`, then the second line displays the value of `y`. Create an object called `x` so that the output is 2.
 
 ```{webr-r}
 #| label: creating-objects-readonly
-#| readonly: true
+#| read-only: true
 #| error: true
 y <- 2 * x + 4
 y
