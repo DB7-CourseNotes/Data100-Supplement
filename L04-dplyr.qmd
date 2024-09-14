@@ -5,7 +5,7 @@ subtitle: "I don't know where the `y` comes from."
 
 ```{r}
 # This should work if you've already ran `install.packages("tidyverse")` at some point.
-library(dplyr)
+library(tidyverse)
 ```
 
 Bascially, `dplyr` is a set of functions that help manipulate data into a form that's useful to us.
@@ -60,7 +60,7 @@ As you might expect, `filter()` filters the data. From the plot above, we saw th
 # Only cars with five cylinders
 # Recall that "==" is a question (is this equal to that?)
 mpg |>
-  filter(cyl = 5)
+  filter(cyl == 5)
 #filter(mpg, cyl == 5) # This is an equivalent (non-pipe) way to do this
 ```
 
