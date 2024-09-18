@@ -10,6 +10,7 @@ L*cache/
 
 # File types
 *.pdf
+*.html
 
 # RStudio stuff
 .Rproj.user
