@@ -1,0 +1,27 @@
+---
+title: Best Car(s) for Fuel Efficiency
+institute: ""
+format: html
+webr:
+  packages: ["dplyr", "ggplot2"]
+  autoload-packages: true
+---
+
+Suppose I want to buy a car and fuel efficiency is my main concern. Also suppose that it's 2008 and electric cars aren't yet a thing. What should I look for when I go to a dealership?
+
+Use the following code cells to use the code we've learned to:
+
+- Find the class/drv/fuel type/etc. that has the best fuel efficiency.
+- Demonstrate this with a relevant plot.
+
+Note: Because this is "`webr`", you *do not* need to install or load any packages. `dplyr` and `ggplot2` are already loaded in the background.
+
+```{webr-r}
+# Use this code cell to find the best car for fuel efficiency!
+```
+
+
+```{webr-r}
+# Use this code cell to make a relevant plot!
+```
+
