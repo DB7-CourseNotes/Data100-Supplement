@@ -1,6 +1,7 @@
 ---
 title: "`dplyr`: Data Pliers in R"
-subtitle: "I don't know where the `y` comes from."
+subtitle: "I don't know where the `y` in `dplyr` comes from."
+output: pdf_document
 ---
 
 ```{r}
@@ -17,7 +18,7 @@ A `data.frame` is basically a simple excel spreadsheet. A **tidy** data frame is
 - Columns represent variables.
 - Rows represent observations.
 
-We'll se throughout the course that this makes it very easy to manage - plots and summary statistics just work better with tidy data.
+We'll see throughout the course that this makes it very easy to manage - plots and summary statistics just work better with tidy data.
 
 For example, the `mpg` data are tidy:
 
@@ -31,26 +32,27 @@ Because of this, it's easy to make plots like this one from last class:
 
 ```{r}
 ggplot(data = mpg) +
-    geom_point(mapping = aes(x = displ, y = hwy, colour = class))+
-    facet_grid(rows = vars(drv), cols = vars(cyl)) +
-    theme_bw()
+  geom_point(mapping = aes(x = displ, y = hwy, colour = class))+
+  facet_grid(rows = vars(drv), cols = vars(cyl)) +
+  theme_bw()
 ```
 
 ## Preliminary: the Pipe
 
 The "pipe" operator in R is `|>`. It takes whatever is on the left and puts it as the *first* argument of the function on the right.
 
-- `x |> f()` is equivalent to `f(x)`.
+- `x |> f()` is equivalent to `f(x)`
 - `x |> f(y)` is equivalent to `f(x, y)`
 - `x |> f() |> g() |> h(y)` is equivalent to:
   - `f(x) |> g() |> h()` 
   - `g(f(x)) |> h()`
   - `h(g(f(x)))`
   - In other words, the pipe works left to right and evaluates the first function first, the second function second, etc.
+- `x |> f(y, z)` is equivalent to `f(x, y, z)`
 
 Like many things in R, this is a bizarre concept until you get used to it, then it becomes second nature.
 
-`dplyr` functions always take a data frame as the first argument and always result in a data frame.
+`dplyr` functions always take a data frame as the first argument and always result in a data frame. This makes them perfect for piping, since the LHS is the first argument (which `dplyr` functions expect to be data) and output a dataframe that can be used as the first argument in the next function!
 
 ## `filter()`
 
@@ -84,7 +86,7 @@ mpg |>
   filter(cyl == 5 | cyl == 8, drv == "f")
 ```
 
-In the code, we used the "`|`" to mean "or".
+In the code, we used the "`|`" to mean "or". Note that this bar has no relation to the one in the pipe (`|>`). 
 
 Compare the plot to the output above to make sure you understand what's going on. The code is essentially saying "5 cylinders *or* 8 cylinders, but either way it needs to be front wheel drive".
 
@@ -94,15 +96,17 @@ The following are equivalent:
 # Generally the preferred way
 mpg |>
   filter(cyl == 5 | cyl == 8, drv == "f")
+
 # This is fine for simple cases
 filter(mpg, cyl == 5 | cyl == 8, drv == "f")
+
 # The "&" symbol means that both must be true,
 # so we need brackets to ensure the comparison is done correctly.
 mpg |>
   filter((cyl == 5 | cyl == 8) & drv == "f")
 ```
 
-Try out the following on your own:
+The last one required brackets to make sure the logic checks are done in the correct orderd. Try out the following on your own:
 
 - `TRUE` or `FALSE` (This one is already done for you below)
 - `TRUE` and `FALSE`
@@ -161,11 +165,11 @@ Once you understand the pipe, this is easy to understand the code:
 
 - We're using the `mpg` data set.
   - We're taking that data and filtering it.
-  - We're then arranging alphabetically by manufacturer and model and sorting the cars by fuel efficiency.
+  - We're then arranging alphabetically by manufacturer and model and by fuel efficiency.
 
 **Try**: What happens if you rearrange the lines in the code, i.e. if you arrange first?
 
-The following would be another way to do this. Would you want to read this code? How hard is it to tell that `manufacturer` is an argument to the `filter()` function?
+The following would be another way to do this. Would you want to read this code? How easy is it to tell that `manufacturer` is an argument to the `filter()` function?
 
 ```{r}
 arrange(filter(mpg, cyl == 5 | cyl == 8, drv == "f"), manufacturer, model, cty, hwy)
@@ -207,7 +211,7 @@ mpg |>
   select(displ, displ_gallons)
 ```
 
-**Try**: Is there now a column labelled `displ_gallons` in the original data frame?
+**Try**: Is there now a column labelled `displ_gallons` in the `mpg` dataframe?
 
 ```{r}
 # Find out here!
@@ -255,3 +259,14 @@ mpg |>
   arrange() # arrange appropriately
 ```
 
+
+## Next Time
+
+We've seen some basic things that we can do with data, but this is far from the power that we're going to need to do data science. Next time, we'll cover Sections 3.5 qand 3.6 as well as Chapter 5 in the textbook:
+
+- Groupby and summarise
+  - What's the mean in each group?
+- Pivoting!
+  - How to get our data into a tidy form.
+
+While they won't be covered in any exam or assignment, it is 100\% worth your time to read through Chapters 2 and 4 of the textbook.
