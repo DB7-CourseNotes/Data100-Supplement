@@ -8,6 +8,9 @@ L*cache/
 !docs/L*files/
 ./site_libs
 
+# File types
+*.pdf
+
 # RStudio stuff
 .Rproj.user
 .Rhistory
