@@ -1,0 +1,173 @@
+---
+title: "L06: Exploratory Data Analysis"
+subtitle: "Chapters XXXin R4DS"
+author: "Devan Becker"
+output: pdf_document
+---
+
+Let's explore some data! What influences the price of a diamond? 
+
+- Probably it's size?
+- Shape?
+- Overall quality?
+
+## Getting Used to the Data
+
+```{r}
+library(tidyverse)
+library(ggrepel)
+glimpse(diamonds)
+```
+
+Plots always show the most information about the data. Let's plot things!
+
+### Categorical Variables
+
+```{r}
+ggplot(diamonds) +
+    aes(x = cut) +
+    geom_bar()
+```
+
+Some comments:
+
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+
+We can also look at some summary statistics:
+
+```{r}
+diamonds |>
+    summarise(
+        smallest_carat = min(carat),
+        distinct_colors = n_distinct(color),
+        distinct_cuts = n_distinct(cut),
+        distinct_cuts_colors = n_distinct(color, cut)
+    )
+```
+
+### Numeric Variables
+
+```{r}
+ggplot(diamonds) +
+    aes(x = carat) + 
+    geom_histogram()
+```
+
+Comments:
+
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+
+## Bivariate Explorations
+
+```{r}
+ggplot(diamonds) +
+    aes(x = clarity, fill = cut) +
+    geom_bar(position = "dodge")
+```
+
+Comments:
+
+- 
+- 
+- 
+- 
+- 
+
+```{r}
+ggplot(diamonds) +
+    aes(x = x, y = y) +
+    geom_point()
+```
+
+Comments:
+
+- There are some outliers - what's up with that? Let's use `filter()` to find out.
+
+```{r echo=FALSE}
+(outliers_xy <- diamonds 
+    # YOUR CODE HERE
+)
+```
+
+
+Let's make a plot where these points are labelled:
+
+```{r}
+outlier_xy_labels <- labs(
+    x = "Width of Diamond",
+    y = "Height of Diamond",
+    title = "What's going on with the outliers?"
+)
+
+# Need ggrepel library to be loaded
+(label_outlier_plot <- diamonds |>
+    filter(
+        # filter out the outliers    
+        # YOUR CODE HERE
+    ) |>
+    # Make the same plot as before
+    # YOUR CODE HERE
+    geom_label_repel(
+        # Add a label for the diamonds in outliers_xy
+        # YOUR CODE HERE
+    ) +
+    geom_point(
+        data = outliers_xy,
+        colour = "red"
+    ) +
+    outlier_xy_labels
+)
+```
+
+
+The code above is a little verbose. There's a much more concise way to do this:
+
+```{r}
+diamonds |>
+    mutate(
+        outlier = ifelse(
+            # YOUR CODE HERE
+        )
+    ) |>
+    ggplot() +
+        # YOUR CODE HERE
+```
+
+### But what about the other columns?
+
+```{r}
+ggplot(diamonds) +
+    aes(x = x, fill = clarity) +
+    geom_density() +
+    facet_wrap(~ cut)
+```
+
+```{r}
+diamonds |>
+    group_by()
+    summarise()
+```
+
+Comments:
+
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+
+
