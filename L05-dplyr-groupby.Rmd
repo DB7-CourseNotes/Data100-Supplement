@@ -19,19 +19,22 @@ glimpse(mpg)
 
 The `dplyr` functions are a powerful set of functions for data manipulation.
 
-- They all take a data frame as the first argument, and output a data frame.
-  - `|>` Perfect for pipes!
-  - They *do not* modify the original data frame.
-- Each is a verb describing what action it's taking.
+-   They all take a data frame as the first argument, and output a data frame.
+    -   `|>` Perfect for pipes!
+    -   They *do not* modify the original data frame.
+-   Each is a verb describing what action it's taking.
 
 ## Changing the Data
 
 In all examples last class, we just outputted the result to the screen. We may want to actually change the data permamently (recall that in R there is no undo button).
 
-1. Change in-place: re-write our original data with a modified version
-  - Do this *rarely* and with great care!
-2. Create a copy: Make a new object with your changes.
-  - Do this often, but make the names meaningful!
+1.  Change in-place: re-write our original data with a modified version
+
+-   Do this *rarely* and with great care!
+
+2.  Create a copy: Make a new object with your changes.
+
+-   Do this often, but make the names meaningful!
 
 Recall that the `cyl` column in `mpg` is either 4, 5, 6, or 8. It cannot be anything other than those values, and will never be in-between. It makes sense to change `cyl` to a factor permanently.
 
@@ -80,10 +83,10 @@ mpg |>
 
 The data frame that comes out of this has completely new column names!
 
-- The names could be anything.
-- The values are the output of a function that *summarises* the data. 
-- `n()` is a special function that returns the number of rows in the current data frame.
-  - In this case, we're only looking at 5 cylinder cars.
+-   The names could be anything.
+-   The values are the output of a function that *summarises* the data.
+-   `n()` is a special function that returns the number of rows in the current data frame.
+    -   In this case, we're only looking at 5 cylinder cars.
 
 Just like with `select()`, we can use `summarise()` on all numeric columns. Here's the mean of every column that is numeric:
 
@@ -106,7 +109,7 @@ mpg |>
   summarise(
     across(
       .cols = where(is.numeric),
-      .fns = list(mean,  median,  sd)
+      .fns = list(mean, median, sd)
     ),
     count = n()
   )
@@ -114,11 +117,11 @@ mpg |>
 
 Note that:
 
-- All of the argument names in `across()` start with a "`.`". Usually, if you come across names that start with a `.` then you're deeper into R's functionality, far beyond what most users will use.
-  - In this case, `across()` assumes that the condition comes first and the function comes second, so you can just pass the arguments by position. I added the argument names for clarity (see Chapter 4 of R4DS), but it's not necessary.
-- The functions in `.fns` are just the R objects - they're not in quotes!
-  - Because of this, the output has the format `colname_fnnumber`, where `fnnumber` is the function number (1 for the first function, 2 for second, and 3 for third).
-  - We can avoid this with a named list, i.e. by using `.fns = list("this_is_the_mean" = mean, "heyLookItsTheMedian" = median, "ess-dee" = sd)` (obviously, the names in quotation marks can be anything - using the names "mean", "median", and "sd" make the most sense, but that makes it confusing for teaching).
+-   All of the argument names in `across()` start with a "`.`". Usually, if you come across names that start with a `.` then you're deeper into R's functionality, far beyond what most users will use.
+    -   In this case, `across()` assumes that the condition comes first and the function comes second, so you can just pass the arguments by position. I added the argument names for clarity (see Chapter 4 of R4DS), but it's not necessary.
+-   The functions in `.fns` are just the R objects - they're not in quotes!
+    -   Because of this, the output has the format `colname_fnnumber`, where `fnnumber` is the function number (1 for the first function, 2 for second, and 3 for third).
+    -   We can avoid this with a named list, i.e. by using `.fns = list("this_is_the_mean" = mean, "heyLookItsTheMedian" = median, "ess-dee" = sd)` (obviously, the names in quotation marks can be anything - using the names "mean", "median", and "sd" make the most sense, but that makes it confusing for teaching).
 
 ## `group_by()`
 
@@ -133,13 +136,12 @@ mpg |>
 Notice that there's still a column labelled `cyl` in the output!
 
 ```{r}
-
 mpg |>
   group_by(cyl, class) |>
   summarise(mean_hwy = mean(hwy), sd_hwy = sd(hwy), number_obs = n())
 ```
 
-- The standard deviation (sd) of `hwy` is NA for four cylinder minivans because there's only one observation in that group!
+-   The standard deviation (sd) of `hwy` is NA for four cylinder minivans because there's only one observation in that group!
 
 The `group_by()` function creates a **grouped data frame**, which is a special thing. For each group there's a complete separate data frame (similar to the facets in `ggplot2`), and any `dplyr` functions will be applied *separately* to each group. This works for *any* `dplyr` function.
 
@@ -151,13 +153,29 @@ mpg_imp |>
   # mutate() will calculate the rank separately for each group
   mutate(overall_rank = rank(overall)) |>
   # No longer need the groupings
-  ungroup() |> 
+  ungroup() |>
   # This makes it easy to navigate the output
   select(manufacturer, model, year, class, overall, overall_rank) |>
   # Let's see the top cars! (low mpg = bad fuel efficiency)
   arrange(overall_rank)
 ```
 
+Similarly, we can do something like the following to `filter()` the data within groups:
+
+```{r}
+# The most fuel efficient car for each number of cylinders
+mpg_imp |>
+  group_by(cyl) |>
+  filter(overall == max(overall))
+```
+
+```{r eval=FALSE}
+# The top 10% of cars in each cylinder class
+mpg_imp |>
+  group_by(cyl) |>
+  filter(???)
+  
+```
 
 ## Activity: How do I get the best fuel efficiency?
 
@@ -165,8 +183,5 @@ Suppose I want to buy a car and fuel efficiency is my main concern. Also suppose
 
 Use the following code cell (or see MyLS if RStudio isn't working for you yet) to use the code we've learned to:
 
-- Find the class/drv/fuel type/etc. that has the best fuel efficiency.
-- Demonstrate this with a plot.
-
-
-
+-   Find the class/drv/fuel type/whatever that "tends to have" the best fuel efficiency.
+-   Demonstrate this with a plot (or plots).
