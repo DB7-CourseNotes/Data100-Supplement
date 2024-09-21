@@ -5,6 +5,80 @@ author: "Devan Becker"
 output: pdf_document
 ---
 
+```{r}
+library(tidyverse)
+library(ggrepel) # Might need to run install.packages("ggrepel") in the console
+```
+
+## Potential Solutions to P05
+
+The goal: What should I look for if I want a fuel efficient car?
+
+Some possible summary statistics:
+
+```{r}
+mpg_imp <- mpg |>
+    mutate(overall = 0.45 * hwy + 0.55 * cty,
+           cyl = factor(cyl)) 
+
+mpg_imp |>
+    group_by(cyl, fl, class) |>
+    summarise(
+        mean_overall = mean(overall),
+        top_ten_percentile = quantile(overall, 0.90)
+    ) |>
+    arrange(desc(mean_overall))
+```
+
+
+Some possible plots:
+
+```{r}
+ggplot(mpg_imp) +
+    aes(x = displ, y = overall, colour = cyl) +
+    geom_point()
+```
+
+Looks like I want a small engine, 4 cylinder car.
+
+```{r}
+ggplot(mpg_imp) +
+    aes(x = class, y = overall, fill = drv) +
+    geom_boxplot()
+```
+
+So it looks like 4 cylinder compact, midsize, and subcompact front wheel drive cars have the highest overall fuel efficiency. Let's only look at those cars:
+
+```{r}
+mpg_imp |>
+    filter(
+        cyl == 4, drv == "f",
+        class %in% c("compact", "midsize", "subcompact")
+    ) |>
+    ggplot() +
+        aes(x = trans, y = overall) +
+        geom_boxplot()
+```
+
+No clear conclusions about the transmission. Let's look at more summary stats.
+
+```{r}
+mpg_imp |>
+    filter(
+        cyl == 4, drv == "f",
+        class %in% c("compact", "midsize", "subcompact")
+    ) |>
+    group_by(class) |>
+    summarise(mean(overall), quantile(overall, 0.9))
+
+```
+
+
+
+
+## Diamonds
+
+
 Let's explore some data! What influences the price of a diamond? 
 
 - Probably it's size?
